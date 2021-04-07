@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/unit/user.test.js",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon src/app.js",
     "start-db": "cd ./config; docker-compose up --force-recreate"
   },
   "author": "Daniele Salaris",
