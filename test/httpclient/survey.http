@@ -2,3 +2,7 @@ GET http://localhost:4242/api/survey/123
 Accept: application/json
 
 ###
+GET http://localhost:4242/api/survey/123/question/200
+
+###
+GET http://localhost:4242/api/survey/123/question/1
