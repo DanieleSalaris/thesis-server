@@ -70,7 +70,7 @@ const surveyService = {
       throw new QuestionNotFound()
     }
 
-    return question
+    return {...question, surveyId: 123}
   }
 }
 

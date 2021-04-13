@@ -1,3 +1,31 @@
+### login admin
+POST http://localhost:4242/api/auth/login
+Content-Type: application/json
+
+{
+  "userId": "001",
+  "password": "12345678"
+}
+
+> {% client.global.set("auth_token", response.body.token) %}
+
+
+### login user
+POST http://localhost:4242/api/auth/login
+Content-Type: application/json
+
+{
+  "userId": "002",
+  "password": "12345678"
+}
+
+> {% client.global.set("auth_token", response.body.token) %}
+
+###
+GET http://localhost:4242/api/auth/protected
+Authorization: Bearer {{auth_token}}
+
+###
 GET http://localhost:4242/api/survey/123
 Accept: application/json
 
@@ -6,3 +34,9 @@ GET http://localhost:4242/api/survey/123/question/200
 
 ###
 GET http://localhost:4242/api/survey/123/question/1
+
+###
+POST http://localhost:4242/api/survey/123/question/1/answer
+Authorization: Bearer {{auth_token}}
+
+

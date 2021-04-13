@@ -1,6 +1,6 @@
 const express = require('express')
 const Joi = require('joi')
-const authController = require('../middlewares/auth.controllers')
+const authController = require('../middlewares/auth.middleware')
 const validator = require('../../../helpers/validator')
 
 const router = express.Router()

@@ -8,6 +8,7 @@ const JwtNotFound = require('../errors/jwt-not-found')
 
 const authController = {
   validateJwt: (req, res, next) => {
+    // @todo check existent user
     try {
       req.token = tokenService.extractToken(req.headers.authorization)
     } catch (e) {

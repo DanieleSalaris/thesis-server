@@ -1,0 +1,20 @@
+POST http://localhost:4242/api/auth/user
+Content-Type: application/json
+
+{
+  "userId": "001",
+  "password": "12345678",
+  "role": "admin"
+}
+
+###
+
+// create user
+POST http://localhost:4242/api/auth/user
+Content-Type: application/json
+
+{
+  "userId": "002",
+  "password": "12345678",
+  "role": "user"
+}
