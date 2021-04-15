@@ -44,9 +44,11 @@ router.post(
   async (req, res, next) => {
     const {surveyId, questionId, questionType} = req.params
     const {userId} = req.token
+    const {data} = req.body
 
+    console.log(data)
     try {
-      const question = await answerService.createAnswer(userId, questionId, Date.now(), {})
+      const question = await answerService.createAnswer(userId, questionId, Date.now(), data)
       return res
         .status(httpStatusCode.successful.CREATED)
         .json(question)

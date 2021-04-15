@@ -35,7 +35,7 @@ const AnswerSchema = new Schema({
 
   data: new Schema ({
     default: {}
-  }),
+  }, {strict: false}),
 
   date: {
     type: SchemaTypes.Date,

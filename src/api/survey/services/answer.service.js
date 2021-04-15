@@ -16,8 +16,9 @@ const answerService = {
       userId,
       surveyId,
       questionId,
-
     })
+
+    console.log(data)
 
     return await AnswerSchema.create({
       userId,

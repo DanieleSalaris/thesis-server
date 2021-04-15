@@ -38,5 +38,16 @@ GET http://localhost:4242/api/survey/123/question/1
 ###
 POST http://localhost:4242/api/survey/123/question/1/answer
 Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "data": {
+    "a": 1,
+    "b": 2,
+    "c": 3
+  }
+}
+
+
 
 
