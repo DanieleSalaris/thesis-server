@@ -1,64 +1,75 @@
 const surveyService = require('./survey.service')
 const AnswerSchema = require('../models/answer.schema')
 const Joi = require('joi')
+const WrongAnswer = require('../errors/wrong-answer')
+const {format} = require('date-fns')
 
 const answerService = {
-  validateAnswerFormat: async (answer, question) => {
+  validateAnswerFormat: async (value, question) => {
     // @todo check question format
 
-    if (!answer || !question) {
-      return null
-    }
+    try {
 
-    const {type: questionType, data} = question
-    const {value} = answer
+      if (!value || !question) {
+        return null
+      }
 
-    switch (questionType) {
-      case 'input':
-        // @todo improve regex
-        const pattern = data.type === 'text' ? /^[a-zA-Z]+$/
-            : data.type === 'number' ? /^[0-9]$/  : /^$/
-        return await Joi
-          .string()
-          .regex(pattern)
-          .min(data.minLength)
-          .max(data.maxLength)
-          .required()
-          .validateAsync(value)
+      const {type: questionType, data} = question
 
-      case 'choice':
-        return await Joi
-          .array()
-          .min(data.minNumberOfChoices)
-          .max(data.maxNumberOfChoices)
-          .unique()
-          .items(
-            Joi.number()
-              .min(0)
-              .max(data.options.length - 1)
-          )
-          .required()
-          .validateAsync(value)
+      switch (questionType) {
+        case 'input':
+          // @todo improve regex
+          const pattern = data.type === 'text' ? /^[a-zA-Z]+$/
+            : data.type === 'number' ? /^[0-9]$/ : /^$/
+          await Joi
+            .string()
+            .regex(pattern)
+            .min(data.minLength)
+            .max(data.maxLength)
+            .required()
+            .validateAsync(value)
+          break
 
-      case 'array':
-        return await Joi
-          .array()
-          .length(data.subQuestions.length)
-          .items(
-            Joi.array()
-              .min(data.minNumberOfChoices)
-              .max(data.maxNumberOfChoices)
-              .unique()
-              .items(
-                Joi.number()
-                  .min(0)
-                  .max(data.options.length - 1)
-              )
-          )
-          .required()
-          .validateAsync(value)
-      default:
-        break;
+        case 'choice':
+          await Joi
+            .array()
+            .min(data.minNumberOfChoices)
+            .max(data.maxNumberOfChoices)
+            .unique()
+            .items(
+              Joi.number()
+                .min(0)
+                .max(data.options.length - 1)
+            )
+            .required()
+            .validateAsync(value)
+          break
+
+        case 'array':
+          await Joi
+            .array()
+            .length(data.subQuestions.length)
+            .items(
+              Joi.array()
+                .min(data.minNumberOfChoices)
+                .max(data.maxNumberOfChoices)
+                .unique()
+                .items(
+                  Joi.number()
+                    .min(0)
+                    .max(data.options.length - 1)
+                )
+            )
+            .required()
+            .validateAsync(value)
+          break
+
+        default:
+          break;
+      }
+
+    } catch (err) {
+      return err
     }
 
     return null
@@ -66,25 +77,38 @@ const answerService = {
 
   createAnswer:  async (userId, questionId, date, value) => {
     const question = surveyService.getQuestionFromId(questionId)
-    const error = await answerService.validateAnswerFormat(answer, question)
+    const error = await answerService.validateAnswerFormat(value, question)
 
-    const {surveyId, question: questionType} = question
+    if (error) {
+      throw new WrongAnswer(error.message)
+    }
+
+    const {surveyId, type: questionType} = question
+
+    const formattedDate = format(date, 'dd/MM/yyyy')
 
     // check if question already exists
     const answer = await AnswerSchema.findOne({
       userId,
       surveyId,
       questionId,
+      date: formattedDate
     })
 
-    return await AnswerSchema.create({
+    const valueToSave = {
       userId,
       questionId,
       surveyId: question.surveyId,
       questionType: question.type,
       value,
-      date
-    })
+      date: formattedDate,
+    }
+
+    if (answer) {
+      return AnswerSchema.updateOne({_id: answer._id}, valueToSave)
+    }
+    return await AnswerSchema.create(valueToSave)
+
   }
 }
 

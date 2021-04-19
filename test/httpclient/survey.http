@@ -41,11 +41,7 @@ Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
-  "data": {
-    "a": 1,
-    "b": 2,
-    "c": 3
-  }
+  "data": [1]
 }
 
 

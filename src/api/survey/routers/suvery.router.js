@@ -5,6 +5,7 @@ const surveyService = require('../services/survey.service')
 const answerService = require('../services/answer.service')
 const AnswerNotFound = require('../errors/answer-not-found')
 const QuestionNotFound = require('../errors/question-not-found')
+const WrongAnswer = require('../errors/wrong-answer')
 const {httpStatusCode} = require('../../../helpers/constants')
 
 const router = express.Router()
@@ -46,7 +47,7 @@ router.post(
     const {userId} = req.token
     const {data} = req.body
 
-    console.log(data)
+
     try {
       const question = await answerService.createAnswer(userId, questionId, Date.now(), data)
       return res
@@ -56,7 +57,13 @@ router.post(
     catch (e) {
       if (e instanceof QuestionNotFound) {
         return res
-          .send(httpStatusCode.clientError.NOT_FOUND)
+          .status(httpStatusCode.clientError.NOT_FOUND)
+          .json({error: e.message})
+      }
+
+      else if (e instanceof WrongAnswer) {
+        return res
+          .status(httpStatusCode.clientError.UNPROCESSABLE_ENTITY)
           .json({error: e.message})
       }
 

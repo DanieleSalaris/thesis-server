@@ -38,7 +38,7 @@ const AnswerSchema = new Schema({
   }, {strict: false}),
 
   date: {
-    type: SchemaTypes.Date,
+    type: SchemaTypes.String,
     required: true,
   }
 })
