@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/unit/user.test.js",
+    "test": "mocha test/unit/answer.test.js",
     "dev": "nodemon src/app.js",
     "start-db": "cd ./config; docker-compose up --force-recreate"
   },

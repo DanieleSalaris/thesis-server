@@ -1,4 +1,4 @@
-const QuestionNotFound = require('../errors/question-not-found')
+const answerService = require('../../src/api/survey/services/answer.service')
 
 const mockSurvey = {
   _id: 1,
@@ -10,7 +10,6 @@ const mockSurvey = {
         label: "Indichi qual'è  il suo ambiente  di lavoro",
         minNumberOfChoices: 1,
         maxNumberOfChoices: 3,
-        hasOtherOption: true,
         options: [
           {label: 'UFFICIO RUMORE AMBIENTALE - LATO NORD PRIMO PIANO'},
           {label: 'UFFICIO NIR - LATO SUD PRIMO PIANO'},
@@ -25,7 +24,6 @@ const mockSurvey = {
         label: "Quanto tempo passa abitualmente all'interno del'suo ambiente di lavoro?",
         minNumberOfChoices: 1,
         maxNumberOfChoices: 1,
-        hasOtherOption: false,
         options: [
           {label: 'Meno di 2 ore'},
           {label: 'Da 2 a 4 ore'},
@@ -70,21 +68,37 @@ const mockSurvey = {
   ]
 }
 
-const surveyService = {
-  // @todo get from db
-  getSurveyFromId: (id) => {
-    return mockSurvey
-  },
 
-  getQuestionFromId: (id) => {
-    const question = mockSurvey.questions.find(question => question._id === id)
-
-    if (!question) {
-      throw new QuestionNotFound()
+describe('Test answer service', () => {
+  it('choice', async () => {
+    const question = mockSurvey.questions[0]
+    const answer = {
+      type: 'choice',
+      value: [1]
     }
 
-    return {...question, surveyId: 123}
-  }
-}
+    await answerService.validateAnswerFormat(answer, question)
+  })
 
-module.exports = surveyService
+  it('array', async () => {
+    const question = mockSurvey.questions[2]
+    const answer = {
+      type: 'array',
+      value: [
+        [0],
+        [0],
+        [3]
+      ]
+    }
+    await answerService.validateAnswerFormat(answer, question)
+  })
+
+  it('input', async () => {
+    const question = mockSurvey.questions[3]
+    const answer = {
+      type: 'input',
+      value: 'abcd'
+    }
+    await answerService.validateAnswerFormat(answer, question)
+  })
+})
