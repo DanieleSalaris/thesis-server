@@ -11,7 +11,8 @@ Content-Type: application/json
 
 
 ### login user
-POST http://localhost:4242/api/auth/login
+#POST http://localhost:4242/api/auth/login
+POST http://14e04a997123.ngrok.io/api/auth/login
 Content-Type: application/json
 
 {
@@ -20,6 +21,9 @@ Content-Type: application/json
 }
 
 > {% client.global.set("auth_token", response.body.token) %}
+
+###
+GET http://14e04a997123.ngrok.io/api/auth/get
 
 ###
 GET http://localhost:4242/api/auth/protected

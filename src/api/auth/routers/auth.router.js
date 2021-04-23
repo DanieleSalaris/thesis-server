@@ -53,6 +53,13 @@ router.get(
   }
 )
 
+router.get(
+  '/get',
+  ((req, res) => {
+    res.send({msg: 'ok'})
+  })
+)
+
 
 
 //router.get('/login', loginController)

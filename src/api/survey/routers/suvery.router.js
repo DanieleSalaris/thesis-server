@@ -12,7 +12,11 @@ const router = express.Router()
 
 router.get(
   '/:id',
-  surveyMiddleware.getSurvey
+  (req, res) => {
+  const {id} = req.params
+
+  res.json(surveyService.getSurveyFromId(id))
+},
 )
 
 router.get(
