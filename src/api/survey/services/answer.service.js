@@ -76,6 +76,42 @@ const answerService = {
   },
 
   createAnswer:  async (userId, questionId, date, value) => {
+    // const question = surveyService.getQuestionFromId(questionId)
+    // const error = await answerService.validateAnswerFormat(value, question)
+    //
+    // if (error) {
+    //   throw new WrongAnswer(error.message)
+    // }
+    //
+    // const {surveyId, type: questionType} = question
+    //
+    // const formattedDate = format(date, 'dd/MM/yyyy')
+    //
+    // // check if question already exists
+    // const answer = await AnswerSchema.findOne({
+    //   userId,
+    //   surveyId,
+    //   questionId,
+    //   date: formattedDate
+    // })
+    //
+    // const valueToSave = {
+    //   userId,
+    //   questionId,
+    //   surveyId: question.surveyId,
+    //   questionType: question.type,
+    //   value,
+    //   date: formattedDate,
+    // }
+    //
+    // if (answer) {
+    //   return AnswerSchema.updateOne({_id: answer._id}, valueToSave)
+    // }
+    // return await AnswerSchema.create(valueToSave)
+
+  },
+
+  answer: async (instanceId, questionId, userId, value) => {
     const question = surveyService.getQuestionFromId(questionId)
     const error = await answerService.validateAnswerFormat(value, question)
 
@@ -83,32 +119,35 @@ const answerService = {
       throw new WrongAnswer(error.message)
     }
 
-    const {surveyId, type: questionType} = question
+    const {surveyId} = question
 
-    const formattedDate = format(date, 'dd/MM/yyyy')
+    // const formattedDate = format(date, 'dd/MM/yyyy')
 
     // check if question already exists
-    const answer = await AnswerSchema.findOne({
-      userId,
-      surveyId,
-      questionId,
-      date: formattedDate
-    })
+    // const answer = await AnswerSchema.findOne({
+    //   userId,
+    //   surveyId,
+    //   questionId,
+    //   // date: formattedDate
+    // })
 
+    const _id = `${instanceId}${question}${userId}`
     const valueToSave = {
+      _id,
+      instanceId,
       userId,
       questionId,
       surveyId: question.surveyId,
       questionType: question.type,
       value,
-      date: formattedDate,
+      // date: formattedDate,
     }
 
-    if (answer) {
-      return AnswerSchema.updateOne({_id: answer._id}, valueToSave)
-    }
-    return await AnswerSchema.create(valueToSave)
-
+    return AnswerSchema.updateOne({_id}, valueToSave, {upsert: true})
+    // if (answer) {
+    //   return AnswerSchema.updateOne({_id: answer._id}, valueToSave)
+    // }
+    // return await AnswerSchema.create(valueToSave)
   }
 }
 

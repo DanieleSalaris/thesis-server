@@ -11,8 +11,18 @@ const AnswerSchema = new Schema({
   //   required: true,
   // },
 
-  surveyId: {
-    // type: SchemaTypes.ObjectId,
+  _id: {
+    type: SchemaTypes.String,
+    required: true,
+  },
+
+  // surveyId: {
+  //   // type: SchemaTypes.ObjectId,
+  //   type: SchemaTypes.String,
+  //   required: true,
+  // },
+
+  instanceId: {
     type: SchemaTypes.String,
     required: true,
   },
@@ -37,10 +47,10 @@ const AnswerSchema = new Schema({
     default: {}
   }, {strict: false}),
 
-  date: {
-    type: SchemaTypes.String,
-    required: true,
-  }
+  // date: {
+  //   type: SchemaTypes.String,
+  //   required: true,
+  // }
 })
 
 module.exports = model('answer', AnswerSchema)

@@ -84,6 +84,20 @@ const surveyService = {
     }
 
     return {...question, surveyId: 123}
+  },
+
+  getQuestions: (surveyId) => {
+    const survey = surveyService.getSurveyFromId(surveyId)
+    return survey.questions
+  },
+
+  getQuestion: (surveyId, questionId) => {
+    const survey = surveyService.getSurveyFromId(surveyId)
+    const question = survey.questions.find(q => q._id === questionId)
+    if (!question) {
+      throw new QuestionNotFound()
+    }
+    return question
   }
 }
 

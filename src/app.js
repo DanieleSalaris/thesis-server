@@ -10,10 +10,6 @@ const surveyRouter = require('./api/survey/routers/suvery.router')
 const app = express()
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 4242
-const DB_URL = process.env.DATABASE_URL || 'mongodb://localhost'
-const DB_NAME = process.env.DB_NAME || 'tesi_db'
-const DB_USER = process.env.DATABASE_USER || 'root'
-const DB_PASSWORD = process.env.DATABASE_PASSWORD || 'password'
 const jsonParser = bodyParser.json()
 
 async function connectDb(dbName=DB_NAME, dbUrl=DB_URL, user=DB_USER, password=DB_PASSWORD) {
@@ -51,6 +47,7 @@ app.get('/', (req, res) => {
 app.use('/api', jsonParser)
 app.use('/api/auth', authRouter,)
 app.use('/api/survey', surveyRouter)
+app.use('/api/instance', instance)
 
 app.use ((err, req, res, next) => {
   if (err) {
