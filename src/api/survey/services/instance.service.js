@@ -30,6 +30,7 @@ const instanceService = {
   },
 
   getInstance: (id) => {
+    console.log('instance id', id)
     const instance = mockInstances.find(i => i._id === id)
     if (!instance) {
       throw new InstanceNotFound()
@@ -47,8 +48,16 @@ const instanceService = {
     return surveyService.getQuestions(instance.surveyId)
   },
 
-  getAnswer: (instanceId, questionId) => {
+  getQuestion: (instanceId, questionId) => {
+    return surveyService.getQuestionFromId(questionId)
+  },
 
+  getAnswers: async (instanceId, userId) => {
+    return answerService.getAnswers({instanceId, userId})
+  },
+
+  getAnswer: async (instanceId, questionId, userId) => {
+    return answerService.getAnswer(instanceId, questionId, userId)
   },
 
   setAnswer: async (instanceId, questionId, userId, value) => {

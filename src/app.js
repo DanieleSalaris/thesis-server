@@ -4,34 +4,16 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const {httpStatusCode} = require('./helpers/constants')
+const {connectDb} = require('./db')
 const authRouter = require('./api/auth/routers/auth.router')
 const surveyRouter = require('./api/survey/routers/suvery.router')
+const instanceRouter = require('./api/survey/routers/instance.router')
 
 const app = express()
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 4242
 const jsonParser = bodyParser.json()
 
-async function connectDb(dbName=DB_NAME, dbUrl=DB_URL, user=DB_USER, password=DB_PASSWORD) {
-  await mongoose.connect(`${dbUrl}/${dbName}`, {
-    auth: {
-      authSource: 'admin',
-      user: user,
-      password: password
-    },
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-
-  console.log('connected to db')
-  // const db = mongoose.connection
-  // db.on('error', error => console.error(error));
-  // db.once('open', function() {
-  //   console.log('Connected to db')
-  // });
-  //
-  // return db
-}
 
 
 connectDb()
@@ -47,7 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api', jsonParser)
 app.use('/api/auth', authRouter,)
 app.use('/api/survey', surveyRouter)
-app.use('/api/instance', instance)
+app.use('/api/instance', instanceRouter)
 
 app.use ((err, req, res, next) => {
   if (err) {

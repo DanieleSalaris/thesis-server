@@ -131,7 +131,7 @@ const answerService = {
     //   // date: formattedDate
     // })
 
-    const _id = `${instanceId}${question}${userId}`
+    const _id = answerService.formatAnswerId(instanceId, question._id, userId)
     const valueToSave = {
       _id,
       instanceId,
@@ -148,6 +148,19 @@ const answerService = {
     //   return AnswerSchema.updateOne({_id: answer._id}, valueToSave)
     // }
     // return await AnswerSchema.create(valueToSave)
+  },
+
+  getAnswer: async (instanceId, questionId, userId) => {
+    const _id = answerService.formatAnswerId(instanceId, questionId, userId)
+    return AnswerSchema.findById(_id)
+  },
+
+  getAnswers: async (filter) => {
+    return AnswerSchema.find(filter)
+  },
+
+  formatAnswerId: (instanceId, questionId, userId) => {
+    return `${instanceId}${questionId}${userId}`
   }
 }
 
