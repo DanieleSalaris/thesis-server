@@ -58,3 +58,7 @@ Content-Type: application/json
 ### getting question
 GET http://localhost:4242/api/instance/2/question/3/answer
 Authorization: Bearer {{auth_token}}
+
+### getting question 2
+GET http://localhost:4242/api/instance/2/question/1/answer/
+Authorization: Bearer {{auth_token}}

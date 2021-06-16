@@ -139,10 +139,11 @@ const answerService = {
       questionId,
       surveyId: question.surveyId,
       questionType: question.type,
-      value,
+      data: value,
       // date: formattedDate,
     }
 
+    console.log('value to save: ', valueToSave)
     return AnswerSchema.updateOne({_id}, valueToSave, {upsert: true})
     // if (answer) {
     //   return AnswerSchema.updateOne({_id: answer._id}, valueToSave)

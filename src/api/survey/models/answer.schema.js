@@ -43,9 +43,16 @@ const AnswerSchema = new Schema({
     required: true,
   },
 
-  data: new Schema ({
-    default: {}
-  }, {strict: false}),
+  // data: new Schema ({
+  //   default: {}
+  // }, {strict: false}),
+
+  data: {
+    type:  Object,
+    required: true,
+  }
+
+
 
   // date: {
   //   type: SchemaTypes.String,
