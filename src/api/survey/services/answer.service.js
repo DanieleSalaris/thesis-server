@@ -20,7 +20,7 @@ const answerService = {
         case 'input':
           // @todo improve regex
           const pattern = data.type === 'text' ? /^[a-zA-Z]+$/
-            : data.type === 'number' ? /^[0-9]$/ : /^$/
+            : data.type === 'number' ? /^[0-9]+$/ : /^$/
           await Joi
             .string()
             .regex(pattern)
