@@ -65,7 +65,6 @@ router.get(
 router.get(
   '/:instanceId/question/:questionId',
   ((req, res, next) => {
-    console.log('getting question')
     const {instanceId, questionId} = req.params
     try {
       const question = instanceService.getQuestion(instanceId, questionId)

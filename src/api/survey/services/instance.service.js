@@ -30,7 +30,6 @@ const instanceService = {
   },
 
   getInstance: (id) => {
-    console.log('instance id', id)
     const instance = mockInstances.find(i => i._id === id)
     if (!instance) {
       throw new InstanceNotFound()

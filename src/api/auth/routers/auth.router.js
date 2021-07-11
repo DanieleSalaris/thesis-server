@@ -38,7 +38,6 @@ router.get(
   authController.validateJwt,
   authController.roleAdmin,
   (req, res) => {
-    console.log('token:', req.token)
     res.status(200).send()
   }
 )
@@ -48,7 +47,6 @@ router.get(
   authController.validateJwt,
   authController.roleUser,
   (req, res) => {
-    console.log('token:', req.token)
     res.status(200).send()
   }
 )
