@@ -5,7 +5,6 @@ const UserNotFoundError = require('../errors/user-not-found-error')
 const JwtNotValid = require('../errors/jwt-not-valid')
 const JwtNotFound = require('../errors/jwt-not-found')
 
-
 const authController = {
   validateJwt: (req, res, next) => {
     // @todo check existent user
@@ -13,7 +12,9 @@ const authController = {
       req.token = tokenService.extractToken(req.headers.authorization)
     } catch (e) {
       if (e instanceof JwtNotValid || e instanceof JwtNotFound) {
-        res.send(httpStatusCode.clientError.UNAUTHORIZED)
+        res
+          .status(httpStatusCode.clientError.UNAUTHORIZED)
+          .send()
       }
       else {
         throw e

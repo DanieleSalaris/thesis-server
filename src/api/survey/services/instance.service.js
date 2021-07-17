@@ -5,17 +5,17 @@ const surveyService = require('./survey.service')
 const mockInstances = [
   {
     _id: '1',
-    surveyId: 1,
+    surveyId: '1',
     date: '10-06-2021',
   },
   {
     _id: '2',
-    surveyId: 1,
+    surveyId: '1',
     date: '15-06-2021',
   },
   {
     _id: '3',
-    surveyId: 1,
+    surveyId: '1',
     date: '18-06-2021',
   }
 ]
