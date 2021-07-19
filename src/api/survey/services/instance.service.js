@@ -17,6 +17,11 @@ const mockInstances = [
     _id: '3',
     surveyId: '1',
     date: '18-06-2021',
+  },
+  {
+    _id: '4',
+    surveyId: '2',
+    date: '25-07-2021'
   }
 ]
 
