@@ -1,59 +1,43 @@
 const InstanceNotFound = require('../errors/instance-not-found')
 const answerService = require('./answer.service')
 const surveyService = require('./survey.service')
-
-const mockInstances = [
-  {
-    _id: '1',
-    surveyId: '1',
-    date: '10-06-2021',
-  },
-  {
-    _id: '2',
-    surveyId: '1',
-    date: '15-06-2021',
-  },
-  {
-    _id: '3',
-    surveyId: '1',
-    date: '18-06-2021',
-  },
-  {
-    _id: '4',
-    surveyId: '2',
-    date: '25-07-2021'
-  }
-]
+const {parseJSONFile} = require('../../../helpers/utility')
 
 const instanceService = {
-  getInstances: (date) => {
-    let instances = mockInstances
+  async loadInstances() {
+    // @todo handle instances not found
+    return await parseJSONFile(process.env.INSTANCES_PATH)
+  },
+
+  async getInstances(date) {
+    let instances = await instanceService.loadInstances()//mockInstances
     if (date) {
       mockInstances.filter(i => i.date === 'date')
     }
     return instances
   },
 
-  getInstance: (id) => {
-    const instance = mockInstances.find(i => i._id === id)
+  async getInstance(id) {
+    const instances = await instanceService.loadInstances()
+    const instance = instances.find(i => i._id === id)
     if (!instance) {
       throw new InstanceNotFound()
     }
     return instance
   },
 
-  getSurvey: (instanceId) => {
-    const instance = instanceService.getInstance(instanceId)
+  async getSurvey(instanceId) {
+    const instance = await instanceService.getInstance(instanceId)
     return surveyService.getSurveyFromId(instance.surveyId)
   },
 
-  getQuestions: (instanceId) => {
-    const instance = instanceService.getInstance(instanceId)
-    return surveyService.getQuestions(instance.surveyId)
+  async getQuestions(instanceId) {
+    const instance = await instanceService.getInstance(instanceId)
+    return await surveyService.getQuestions(instance.surveyId)
   },
 
-  getQuestion: (instanceId, questionId) => {
-    return surveyService.getQuestionFromId(questionId)
+  getQuestion: async (instanceId, questionId) => {
+    return await surveyService.getQuestionFromId(questionId)
   },
 
   getAnswers: async (instanceId, userId) => {
@@ -64,8 +48,8 @@ const instanceService = {
     return answerService.getAnswer(instanceId, questionId, userId)
   },
 
-  setAnswer: async (instanceId, questionId, userId, value) => {
-    instanceService.getSurvey(instanceId)
+  async setAnswer(instanceId, questionId, userId, value) {
+    await instanceService.getSurvey(instanceId)
     return await answerService.answer(instanceId, questionId, userId, value)
   }
 }

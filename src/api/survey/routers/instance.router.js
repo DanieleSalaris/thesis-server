@@ -64,10 +64,10 @@ router.get(
 
 router.get(
   '/:instanceId/question/:questionId',
-  ((req, res, next) => {
+  (async (req, res, next) => {
     const {instanceId, questionId} = req.params
     try {
-      const question = instanceService.getQuestion(instanceId, questionId)
+      const question = await instanceService.getQuestion(instanceId, questionId)
       return res.json(question)
     }
     catch (e) {
