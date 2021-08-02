@@ -73,6 +73,7 @@ const authController = {
         res
           .status(httpStatusCode.clientError.UNAUTHORIZED)
           .send()
+        return
       }
       else { // unknown error
         return next(err)

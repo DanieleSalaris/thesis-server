@@ -14,7 +14,7 @@ router.post(
   validator.body(Joi.object({
     userId: Joi.string()
       .alphanum()
-      .min(3)
+      //.min(3)
       .max(32)
       .required(),
 
