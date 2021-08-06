@@ -110,5 +110,87 @@
         }
       }
     ]
+  },
+  {
+    "_id": "3",
+    "questions": [
+      {
+        "_id": "1",
+        "type": "choice",
+        "data": {
+          "label": "Sono soddisfatto delle condizioni termiche (temperatura, umidità, correnti d'aria) nelle aule in cui svolgo le lezioni?",
+          "minNumberOfChoices": 1,
+          "maxNumberOfChoices": 1,
+          "options": [
+            {"label": "Decisamente no"},
+            {"label": "Più no che si"},
+            {"label": "Più si che no"},
+            {"label": "Decisamente no"}
+          ]
+        }
+      },
+      {
+        "_id": "2",
+        "type": "choice",
+        "minNumberOfChoices": 1,
+        "maxNumberOfChoices": 1,
+        "data": {
+          "label": "Sono soddisfatto della qualità dell'aria (odori, sensazione di freschezza e pulizia, aria viziata) nelle aule in cui si svolgono le lezioni?",
+          "options": [
+            {"label": "Decisamente no"},
+            {"label": "Più no che si"},
+            {"label": "Più si che no"},
+            {"label": "Decisamente no"}
+          ]
+        }
+      },
+      {
+        "_id": "3",
+        "type": "choice",
+        "minNumberOfChoices": 1,
+        "maxNumberOfChoices": 1,
+        "data": {
+          "label": "Sono soddisfatto della qualità acustica (rumore e compressione delle parole del docente) nelle aule in cui si svolgono le lezioni?",
+          "minNumberOfChoices": 1,
+          "maxNumberOfChoices": 1,
+          "options": [
+            {"label": "Decisamente no"},
+            {"label": "Più no che si"},
+            {"label": "Più si che no"},
+            {"label": "Decisamente no"}
+          ]
+        }
+      },
+      {
+        "_id": "4",
+        "type": "choice",
+        "minNumberOfChoices": 1,
+        "maxNumberOfChoices": 1,
+        "data": {
+          "label": "Sono soddisfatto delle condizioni di illuminazione naturale e artificiale (quantità di luce, assenza di disturbi visivi) nelle aule in cui si svolgono le lezioni?",
+          "options": [
+            {"label": "Decisamente no"},
+            {"label": "Più no che si"},
+            {"label": "Più si che no"},
+            {"label": "Decisamente no"}
+          ]
+        }
+      },
+      {
+        "_id": "5",
+        "type": "choice",
+        "minNumberOfChoices": 1,
+        "maxNumberOfChoices": 1,
+        "data": {
+          "label": "Sono soddisfatto delle condizioni di illuminazione naturale e artificiale (quantità di luce, assenza di disturbi visivi) nelle aule in cui si svolgono le lezioni?",
+          "options": [
+            {"label": "Decisamente no"},
+            {"label": "Più no che si"},
+            {"label": "Più si che no"},
+            {"label": "Decisamente no"}
+          ]
+        }
+      }
+    ]
   }
 ]

@@ -15,7 +15,7 @@ const surveyService = {
 
   getQuestionFromId: async (id) => {
     const surveys = await surveyService.loadSurveys()
-    const question = surveys.questions.find(question => question._id === id)
+    const question = surveys?.questions?.find(question => question._id === id)
 
     if (!question) {
       throw new QuestionNotFound()
