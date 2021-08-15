@@ -111,25 +111,15 @@ const answerService = {
 
   },
 
-  answer: async (instanceId, questionId, userId, value) => {
-    const question = surveyService.getQuestionFromId(questionId)
+  answer: async (instanceId, surveyId, questionId, userId, value) => {
+    // const question = surveyService.getQuestionFromId(questionId)
+
+    const question = await surveyService.getQuestionFromSurveyIdQuestionId(surveyId, questionId)
     const error = await answerService.validateAnswerFormat(value, question)
 
     if (error) {
       throw new WrongAnswer(error.message)
     }
-
-    const {surveyId} = question
-
-    // const formattedDate = format(date, 'dd/MM/yyyy')
-
-    // check if question already exists
-    // const answer = await AnswerSchema.findOne({
-    //   userId,
-    //   surveyId,
-    //   questionId,
-    //   // date: formattedDate
-    // })
 
     const _id = answerService.formatAnswerId(instanceId, question._id, userId)
     const valueToSave = {

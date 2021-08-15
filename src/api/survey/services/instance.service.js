@@ -49,8 +49,8 @@ const instanceService = {
   },
 
   async setAnswer(instanceId, questionId, userId, value) {
-    await instanceService.getSurvey(instanceId)
-    return await answerService.answer(instanceId, questionId, userId, value)
+    const {_id: surveyId} = await instanceService.getSurvey(instanceId)
+    return await answerService.answer(instanceId, surveyId, questionId, userId, value)
   }
 }
 

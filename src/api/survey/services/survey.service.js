@@ -24,6 +24,18 @@ const surveyService = {
     return {...question, surveyId: 123}
   },
 
+  getQuestionFromSurveyIdQuestionId: async (surveyId, questionId) => {
+    const surveys = await surveyService.loadSurveys()
+    const question = surveys?.find(survey => survey._id === surveyId)
+      ?.questions?.find(question => question._id === questionId)
+
+    if (!question) {
+      throw new QuestionNotFound()
+    }
+
+    return question
+  },
+
   getQuestions: async (surveyId) => {
     const survey = await surveyService.getSurveyFromId(surveyId)
     return survey.questions
