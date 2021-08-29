@@ -138,4 +138,20 @@ router.post(
   })
 )
 
+// not proper rest, get singleton today instance
+router.post(
+  '/today-instance',
+  // authMiddleware.validateJwt,
+  // authMiddleware.roleUser,
+  async (req, res, next)  => {
+    try {
+      const instance = await instanceService.singletonGetTodayInstance()
+      return res.json(instance)
+    }
+    catch (e) {
+      return next(e)
+    }
+  }
+)
+
 module.exports = router

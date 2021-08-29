@@ -2,6 +2,8 @@ const InstanceNotFound = require('../errors/instance-not-found')
 const answerService = require('./answer.service')
 const surveyService = require('./survey.service')
 const {parseJSONFile} = require('../../../helpers/utility')
+const InstanceSchema = require('../models/instance.schema')
+const format = require('date-fns/format')
 
 const instanceService = {
   async loadInstances() {
@@ -18,8 +20,15 @@ const instanceService = {
   },
 
   async getInstance(id) {
+    // get instance from db
+    let instance = InstanceSchema.findById(id)
+    if (instance) {
+      return instance
+    }
+
+    // if instance not found get instance from config file
     const instances = await instanceService.loadInstances()
-    const instance = instances.find(i => i._id === id)
+    instance = instances.find(i => i._id === id)
     if (!instance) {
       throw new InstanceNotFound()
     }
@@ -51,6 +60,20 @@ const instanceService = {
   async setAnswer(instanceId, questionId, userId, value) {
     const {_id: surveyId} = await instanceService.getSurvey(instanceId)
     return await answerService.answer(instanceId, surveyId, questionId, userId, value)
+  },
+
+  async singletonGetTodayInstance() {
+    //@todo transaction
+    const today = new Date(2021, 8, 25)
+    const todayFormatted = format(today, 'dd/MM/yyyy')
+    let instance = await InstanceSchema.findOne({date: todayFormatted})
+
+    if (!instance) {
+      const res = await InstanceSchema.create({date: todayFormatted, surveyId: '3'})
+      instance = res._doc
+    }
+
+    return instance
   }
 }
 

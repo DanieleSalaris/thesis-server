@@ -62,3 +62,25 @@ Authorization: Bearer {{auth_token}}
 ### getting question 2
 GET http://localhost:4242/api/instance/2/question/1/answer/
 Authorization: Bearer {{auth_token}}
+
+### singleton instance
+POST http://localhost:4242/api/instance/today-instance
+
+> {% client.global.set("instance_id", response.body._id) %}
+
+### get questions
+GET http://localhost:4242/api/instance/{{instance_id}}/question
+
+### answer question 1
+POST http://localhost:4242/api/instance/{{instance_id}}/question/1/answer
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "value": [1]
+}
+
+### get answer 2
+GET http://localhost:4242/api/instance/{{instance_id}}/question/1/answer/
+Authorization: Bearer {{auth_token}}
+
