@@ -1,14 +1,22 @@
 const express = require('express')
 const authMiddleware = require('../../auth/middlewares/auth.middleware')
-const surveyMiddleware = require('../middlewares/survey.middleware')
 const surveyService = require('../services/survey.service')
 const answerService = require('../services/answer.service')
-const AnswerNotFound = require('../errors/answer-not-found')
 const QuestionNotFound = require('../errors/question-not-found')
 const WrongAnswer = require('../errors/wrong-answer')
 const {httpStatusCode} = require('../../../helpers/constants')
 
 const router = express.Router()
+
+router.get(
+  '/answer-csv',
+  async (req, res) => {
+    console.log('answer csv')
+    const filePath = await answerService.getAnswersCsv()
+
+    res.download(filePath)
+  }
+)
 
 router.get(
   '/:id',

@@ -48,6 +48,9 @@ Content-Type: application/json
   "data": [1]
 }
 
+### get aswers csv
+GET http://localhost:4242/api/survey/answer-csv
+
 
 
 

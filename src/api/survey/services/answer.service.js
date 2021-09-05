@@ -2,7 +2,7 @@ const surveyService = require('./survey.service')
 const AnswerSchema = require('../models/answer.schema')
 const Joi = require('joi')
 const WrongAnswer = require('../errors/wrong-answer')
-const {format} = require('date-fns')
+const fs = require('fs')
 
 const answerService = {
   validateAnswerFormat: async (value, question) => {
@@ -151,6 +151,17 @@ const answerService = {
 
   formatAnswerId: (instanceId, questionId, userId) => {
     return `${instanceId}${questionId}${userId}`
+  },
+
+  getAnswersCsv: async () => {
+    const filePath = `${process.env.TMP_FILES}/f`
+    const writeFilePromise = new Promise((resolve, reject) => {
+      AnswerSchema.findAndStreamCsv({})
+        .pipe(fs.createWriteStream(filePath))
+        .on('close', () => resolve(filePath))
+    })
+
+    return writeFilePromise
   }
 }
 
