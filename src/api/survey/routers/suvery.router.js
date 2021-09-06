@@ -5,16 +5,18 @@ const answerService = require('../services/answer.service')
 const QuestionNotFound = require('../errors/question-not-found')
 const WrongAnswer = require('../errors/wrong-answer')
 const {httpStatusCode} = require('../../../helpers/constants')
+const fs = require('fs')
 
 const router = express.Router()
 
 router.get(
   '/answer-csv',
   async (req, res) => {
-    console.log('answer csv')
     const filePath = await answerService.getAnswersCsv()
 
-    res.download(filePath)
+    res.download(filePath, () => {
+      fs.unlink(filePath, () => {})
+    })
   }
 )
 
