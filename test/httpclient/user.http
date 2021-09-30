@@ -3,18 +3,48 @@ Content-Type: application/json
 
 {
   "userId": "001",
-  "password": "12345678",
+  "password": "12345670",
   "role": "admin"
 }
 
-###
-
-// create user
-POST http://localhost:4242/api/auth/user
+### login admin
+POST http://localhost:4242/api/auth/login
 Content-Type: application/json
 
 {
-  "userId": "003",
+  "userId": "001",
+  "password": "12345678"
+}
+
+> {% client.global.set("auth_token", response.body.token) %}
+
+
+### create user
+POST http://localhost:4242/api/auth/user
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "userId": "005",
   "password": "12345678",
-  "role": "user"
+  "isAdmin": false
+}
+
+### update password
+POST http://localhost:4242/api/auth/user/update-password
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "userId": "005",
+  "password": "12345670"
+}
+
+### login
+POST http://localhost:4242/api/auth/login
+Content-Type: application/json
+
+{
+  "userId": "005",
+  "password": "12345678"
 }

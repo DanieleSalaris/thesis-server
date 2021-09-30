@@ -6,7 +6,20 @@ const validator = require('../../../helpers/validator')
 const router = express.Router()
 
 // create user
-router.post('/user', authController.createUser)
+router.post(
+  '/user',
+  authController.validateJwt,
+  authController.roleAdmin,
+  authController.createUser
+)
+
+// update password
+router.post(
+  '/user/update-password',
+  authController.validateJwt,
+  authController.roleAdmin,
+  authController.updatePassword
+)
 
 // login
 router.post(

@@ -4,6 +4,7 @@ const {httpStatusCode} = require('../../../helpers/constants')
 const UserNotFoundError = require('../errors/user-not-found-error')
 const JwtNotValid = require('../errors/jwt-not-valid')
 const JwtNotFound = require('../errors/jwt-not-found')
+const UserAlreadyExists = require('../errors/user-already-exists')
 
 const authController = {
   validateJwt: (req, res, next) => {
@@ -46,19 +47,33 @@ const authController = {
     next()
   },
 
-  createUser: async (req, res) => {
+  createUser: async (req, res, next) => {
     try {
-      const {userId, password, role} = req.body
-      await userService.createUser(userId, password, role)
+      const {userId, password, isAdmin} = req.body
+      await userService.createUser(userId, password, isAdmin)
     } catch (e) {
-      console.log('error:', e)
-      return res
-        .status(httpStatusCode.serverError.INTERNAL_SERVER_ERROR)
-        .send()
-
+      if (e instanceof UserAlreadyExists) {
+        return res
+          .status(httpStatusCode.clientError.UNPROCESSABLE_ENTITY)
+          .json({message: e.message})
+      }
+      next(e)
     }
     return res
       .status(httpStatusCode.successful.CREATED)
+      .send()
+  },
+
+  updatePassword: async (req, res, next) => {
+    try {
+      const {userId, password} = req.body
+      await userService.updatePassword(userId, password)
+    } catch (e) {
+      next(e)
+    }
+
+    return res
+      .status(httpStatusCode.successful.NO_CONTENT)
       .send()
   },
 

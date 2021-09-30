@@ -34,9 +34,14 @@ app.use('/api/instance', instanceRouter)
 app.use ((err, req, res, next) => {
   if (err) {
     console.log(`${err.name}: ${err.message}`)
+    console.log(err)
+    let statusCode = httpStatusCode.serverError.INTERNAL_SERVER_ERROR
+    if(err.name === 'ValidationError') {
+      statusCode = httpStatusCode.clientError.UNPROCESSABLE_ENTITY
+    }
     res
-      .status(httpStatusCode.serverError.INTERNAL_SERVER_ERROR)
-      .send()
+      .status(statusCode)
+      .json({message: err.message})
   }
 })
 
