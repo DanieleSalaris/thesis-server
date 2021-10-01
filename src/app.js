@@ -2,21 +2,26 @@ require('dotenv').config() // take environment variables from .env file
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
 const {httpStatusCode} = require('./helpers/constants')
 const {connectDb} = require('./db')
 const authRouter = require('./api/auth/routers/auth.router')
 const surveyRouter = require('./api/survey/routers/suvery.router')
 const instanceRouter = require('./api/survey/routers/instance.router')
+const userService = require('./api/auth/services/user.service')
 
 const app = express()
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 4242
 const jsonParser = bodyParser.json()
+const adminName = process.env.ADMIN_NAME || 'root'
+const adminPassword = process.env.ADMIN_PASSWORD || '12345678'
 
 
 
 connectDb()
+  .then(() => {
+    userService.upsertFirstAdmin(adminName, adminPassword).catch()
+  })
   .catch(err => {
     console.error(err)
     process.exit(-1)

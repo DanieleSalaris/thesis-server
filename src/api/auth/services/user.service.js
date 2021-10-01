@@ -5,6 +5,10 @@ const UserAlreadyExists = require('../errors/user-already-exists')
 const Joi = require('joi')
 
 const userService = {
+  roles: {
+    ADMIN: 'admin',
+    USER: 'user'
+  },
 
   generatePasswordHash: async (password) => {
     const salt = await bcrypt.genSalt(10)
@@ -25,7 +29,7 @@ const userService = {
       await userService.validateUserFormat(userId, password, isAdmin)
       const passwordHash = await userService.generatePasswordHash(password)
 
-      const role = isAdmin ? 'admin' : 'user'
+      const role = isAdmin ? userService.roles.ADMIN : userService.roles.USER
       try {
         await User.create({_id: userId, passwordHash, role})
       } catch (e) {
@@ -36,11 +40,23 @@ const userService = {
 
   },
 
+  upsertFirstAdmin: async (userId, password) => {
+    await userService.validateUserFormat(userId, password)
+    const role = userService.roles.ADMIN
+    const passwordHash = await userService.generatePasswordHash(password)
+
+    return User.updateOne(
+      {_id: userId},
+      {passwordHash, role},
+      {upsert: true}
+      )
+  },
+
   updatePassword: async (userId, password) => {
     await userService.validateUserFormat(userId, password)
     const passwordHash = await userService.generatePasswordHash(password)
-    const res = await User.findOneAndUpdate({_id: userId}, {passwordHash}, {useFindAndModify: true})
-    console.log({userId, password, res})
+    await User.findOneAndUpdate({_id: userId}, {passwordHash}, {useFindAndModify: true})
+
   },
 
   login: async (userId, password) => {
