@@ -153,15 +153,13 @@ const answerService = {
     return `${instanceId}${questionId}${userId}`
   },
 
-  getAnswersCsv: async () => {
-    const filePath = `${process.env.TMP_FILES}/f`
-    const writeFilePromise = new Promise((resolve, reject) => {
-      AnswerSchema.findAndStreamCsv({})
+  getAnswersCsv: async (instanceId) => {
+    const filePath = `${process.env.TMP_FILES}/instance-${instanceId}.csv`
+    return new Promise((resolve, reject) => {
+      AnswerSchema.findAndStreamCsv({instanceId})
         .pipe(fs.createWriteStream(filePath))
         .on('close', () => resolve(filePath))
     })
-
-    return writeFilePromise
   }
 }
 

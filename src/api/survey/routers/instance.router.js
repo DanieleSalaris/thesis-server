@@ -1,10 +1,12 @@
 const express = require('express')
+const fs = require('fs')
 const authMiddleware = require('../../auth/middlewares/auth.middleware')
 const instanceService = require('../services/instance.service')
 const InstanceNotFound = require('../errors/instance-not-found')
 const QuestionNotFound = require('../errors/question-not-found')
 const {httpStatusCode} = require('../../../helpers/constants')
 const {formatError} = require('../../../helpers/utility')
+const answerService = require('../services/answer.service')
 
 const router = express.Router()
 
@@ -141,8 +143,8 @@ router.post(
 // not proper rest, get singleton today instance
 router.post(
   '/today-instance',
-  // authMiddleware.validateJwt,
-  // authMiddleware.roleUser,
+  authMiddleware.validateJwt,
+  authMiddleware.roleUser,
   async (req, res, next)  => {
     try {
       const instance = await instanceService.singletonGetTodayInstance()
@@ -151,6 +153,20 @@ router.post(
     catch (e) {
       return next(e)
     }
+  }
+)
+
+router.get(
+  '/:instanceId/answer-csv',
+  // authMiddleware.validateJwt,
+  // authMiddleware.roleAdmin,
+  async (req, res) => {
+    const {instanceId} = req.params
+    const filePath = await answerService.getAnswersCsv(instanceId)
+
+    res.download(filePath, () => {
+      fs.unlink(filePath, () => {})
+    })
   }
 )
 

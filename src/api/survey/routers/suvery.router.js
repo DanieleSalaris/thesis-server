@@ -10,17 +10,6 @@ const fs = require('fs')
 const router = express.Router()
 
 router.get(
-  '/answer-csv',
-  async (req, res) => {
-    const filePath = await answerService.getAnswersCsv()
-
-    res.download(filePath, () => {
-      fs.unlink(filePath, () => {})
-    })
-  }
-)
-
-router.get(
   '/:id',
   (req, res) => {
   const {id} = req.params
