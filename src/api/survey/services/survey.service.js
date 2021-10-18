@@ -24,6 +24,11 @@ const surveyService = {
     return {...question, surveyId: 123}
   },
 
+  getQuestions: async (surveyId) => {
+    const survey = await surveyService.getSurveyFromId(surveyId)
+    return survey.questions
+  },
+
   getQuestionFromSurveyIdQuestionId: async (surveyId, questionId) => {
     const surveys = await surveyService.loadSurveys()
     const question = surveys?.find(survey => survey._id === surveyId)
@@ -34,11 +39,6 @@ const surveyService = {
     }
 
     return question
-  },
-
-  getQuestions: async (surveyId) => {
-    const survey = await surveyService.getSurveyFromId(surveyId)
-    return survey.questions
   },
 
   getQuestion: (surveyId, questionId) => {

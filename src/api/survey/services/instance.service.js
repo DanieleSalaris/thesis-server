@@ -14,7 +14,7 @@ const instanceService = {
   async getInstances(date) {
     let instances = await instanceService.loadInstances()//mockInstances
     if (date) {
-      mockInstances.filter(i => i.date === 'date')
+      instances.filter(i => i.date === 'date')
     }
     return instances
   },
