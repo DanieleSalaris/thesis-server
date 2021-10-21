@@ -64,7 +64,7 @@ const instanceService = {
 
   async singletonGetTodayInstance() {
     //@todo transaction
-    const today = new Date(2021, 8, 25)
+    const today = new Date()
     const todayFormatted = format(today, 'dd/MM/yyyy')
     let instance = await InstanceSchema.findOne({date: todayFormatted})
 

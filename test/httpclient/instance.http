@@ -65,6 +65,7 @@ Authorization: Bearer {{auth_token}}
 
 ### singleton instance
 POST http://localhost:4242/api/instance/today-instance
+Authorization: Bearer {{auth_token}}
 
 > {% client.global.set("instance_id", response.body._id) %}
 
