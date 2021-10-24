@@ -21,9 +21,18 @@ const instanceService = {
 
   async getInstance(id) {
     // get instance from db
-    let instance = InstanceSchema.findById(id)
-    if (instance) {
-      return instance
+    let instance
+    try {
+      instance = await InstanceSchema.findById(id)
+      if (instance) {
+        return instance
+      }
+    }
+    catch (e) {
+      // CastError means that the id is not on ObjectId hex format
+      if (e.name !== "CastError") {
+        throw e
+      }
     }
 
     // if instance not found get instance from config file

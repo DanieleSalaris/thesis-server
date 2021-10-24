@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha test/unit/instance.test.js",
     "dev": "nodemon src/app.js",
-    "start-db": "cd ./config; docker-compose up --force-recreate"
+    "start-db": "cd ./config; sudo docker-compose up --force-recreate"
   },
   "author": "Daniele Salaris",
   "license": "ISC",

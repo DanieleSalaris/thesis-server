@@ -13,7 +13,7 @@ Content-Type: application/json
 GET http://localhost:4242/api/instance
 
 ### get single instance
-GET http://localhsot:4242/api/instance/2
+GET http://localhost:4242/api/instance/2
 
 ### get questions
 GET http://localhost:4242/api/instance/2/question
