@@ -57,7 +57,7 @@ Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-  "userId": "003",
+  "userId": "002",
   "password": "12345678",
   "isAdmin": true
 }
