@@ -62,5 +62,13 @@ Authorization: Bearer {{auth_token}}
   "isAdmin": true
 }
 
+###
+POST https://b442-79-36-84-40.ngrok.io/api/auth/login
+Content-Type: application/json
+
+{
+  "userId": "002",
+  "password": "12345678"
+}
 
 

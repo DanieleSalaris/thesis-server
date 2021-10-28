@@ -12,10 +12,10 @@ const AnswerSchema = new Schema({
   //   required: true,
   // },
 
-  _id: {
-    type: SchemaTypes.String,
-    required: true,
-  },
+  // _id: {
+  //   type: SchemaTypes.String,
+  //   required: true,
+  // },
 
   surveyId: {
     // type: SchemaTypes.ObjectId,
@@ -51,14 +51,12 @@ const AnswerSchema = new Schema({
   data: {
     type:  Object,
     required: true,
+  },
+
+  date: {
+    type: SchemaTypes.Date,
+    required: true,
   }
-
-
-
-  // date: {
-  //   type: SchemaTypes.String,
-  //   required: true,
-  // }
 })
 
 AnswerSchema.plugin(mongooseToCsv, {

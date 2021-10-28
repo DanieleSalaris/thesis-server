@@ -3,6 +3,7 @@ const AnswerSchema = require('../models/answer.schema')
 const Joi = require('joi')
 const WrongAnswer = require('../errors/wrong-answer')
 const fs = require('fs')
+const format = require('date-fns/format')
 
 const answerService = {
   validateAnswerFormat: async (value, question) => {
@@ -121,19 +122,21 @@ const answerService = {
       throw new WrongAnswer(error.message)
     }
 
-    const _id = answerService.formatAnswerId(instanceId, question._id, userId)
+    // const _id = answerService.formatAnswerId(instanceId, question._id, userId)
+    const date = new Date()
     const valueToSave = {
-      _id,
+      // _id,
       instanceId,
       userId,
       questionId,
-      surveyId: question.surveyId,
+      surveyId,
       questionType: question.type,
       data: value,
-      // date: formattedDate,
+      date,
     }
 
-    return AnswerSchema.updateOne({_id}, valueToSave, {upsert: true})
+    return AnswerSchema.create(valueToSave)
+    // return AnswerSchema.updateOne({_id}, valueToSave, {upsert: true})
     // if (answer) {
     //   return AnswerSchema.updateOne({_id: answer._id}, valueToSave)
     // }
@@ -141,8 +144,11 @@ const answerService = {
   },
 
   getAnswer: async (instanceId, questionId, userId) => {
-    const _id = answerService.formatAnswerId(instanceId, questionId, userId)
-    return AnswerSchema.findById(_id)
+    //const _id = answerService.formatAnswerId(instanceId, questionId, userId)
+    return AnswerSchema
+      .find({instanceId, questionId, userId})
+      .sort('date')
+      .limit(1)
   },
 
   getAnswers: async (filter) => {
