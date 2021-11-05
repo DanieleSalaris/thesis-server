@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/unit/instance.test.js",
-    "dev": "nodemon src/app.js",
+    "dev": "export DEV=true; nodemon src/app.js",
     "start-db": "cd ./config; sudo docker-compose up --force-recreate",
     "start": "node src/app.js"
   },

@@ -1,4 +1,6 @@
-//require('dotenv').config() // take environment variables from .env file
+if (process.env.DEV) {
+  require('dotenv').config() // take environment variables from .env file
+}
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -25,10 +27,7 @@ connectDb()
     process.exit(-1)
   })
 
-app.get('/', (req, res) => {
-  res.send('Hello World')
-})
-
+app.use('/', express.static('./client-dist'))
 app.use('/api', jsonParser)
 app.use('/api/auth', authRouter,)
 app.use('/api/survey', surveyRouter)
