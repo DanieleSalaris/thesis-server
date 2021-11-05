@@ -62,8 +62,8 @@ Authorization: Bearer {{auth_token}}
   "isAdmin": true
 }
 
-###
-POST https://b442-79-36-84-40.ngrok.io/api/auth/login
+### login user
+POST https://s265553-thesis-server.herokuapp.com/api/auth/login
 Content-Type: application/json
 
 {
