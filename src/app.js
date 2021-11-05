@@ -16,11 +16,6 @@ const jsonParser = bodyParser.json()
 const adminName = process.env.ADMIN_NAME || 'root'
 const adminPassword = process.env.ADMIN_PASSWORD || '12345678'
 
-
-console.log('env variables: ', {
-  host, port, adminName, adminPassword
-})
-
 connectDb()
   .then(() => {
     userService.upsertFirstAdmin(adminName, adminPassword).catch()
