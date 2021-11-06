@@ -1010,8 +1010,8 @@
           _classCallCheck(this, SurveyService);
 
           this.http = http;
-          this.prefix = 'API/survey';
-          this.instancePrefix = 'API/instance';
+          this.prefix = 'api/survey';
+          this.instancePrefix = 'api/instance';
           this.instanceId = null;
           this.survey = null;
         }
@@ -1022,7 +1022,7 @@
             var _this2 = this;
 
             var instanceId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '2';
-            return this.http.get("API/instance/".concat(instanceId, "/question")).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (questions) {
+            return this.http.get("".concat(this.instancePrefix, "/").concat(instanceId, "/question")).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (questions) {
               return questions.map(function (q) {
                 return _this2.formatQuestion(q);
               });
@@ -1031,14 +1031,14 @@
         }, {
           key: "answerQuestion",
           value: function answerQuestion(instanceId, questionId, value) {
-            return this.http.post("API/instance/".concat(instanceId, "/question/").concat(questionId, "/answer"), {
+            return this.http.post("".concat(this.instancePrefix, "/").concat(instanceId, "/question/").concat(questionId, "/answer"), {
               value: value
             });
           }
         }, {
           key: "getAnswer",
           value: function getAnswer(instanceId, questionId) {
-            return this.http.get("API/instance/".concat(instanceId, "/question/").concat(questionId, "/answer/"));
+            return this.http.get("".concat(this.instancePrefix, "/").concat(instanceId, "/question/").concat(questionId, "/answer/"));
           }
         }, {
           key: "refreshSurvey",
@@ -4173,7 +4173,7 @@
 
           this.http = http;
           this.tokenStorageService = tokenStorageService;
-          this.prefix = 'API/auth';
+          this.prefix = 'api/auth';
         }
 
         _createClass(AuthService, [{

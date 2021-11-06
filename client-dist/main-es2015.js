@@ -587,19 +587,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 let SurveyService = class SurveyService {
     constructor(http) {
         this.http = http;
-        this.prefix = 'API/survey';
-        this.instancePrefix = 'API/instance';
+        this.prefix = 'api/survey';
+        this.instancePrefix = 'api/instance';
         this.instanceId = null;
         this.survey = null;
     }
     getQuestionsFromInstanceId(instanceId = '2') {
-        return this.http.get(`API/instance/${instanceId}/question`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((questions) => questions.map(q => this.formatQuestion(q))));
+        return this.http.get(`${this.instancePrefix}/${instanceId}/question`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((questions) => questions.map(q => this.formatQuestion(q))));
     }
     answerQuestion(instanceId, questionId, value) {
-        return this.http.post(`API/instance/${instanceId}/question/${questionId}/answer`, { value });
+        return this.http.post(`${this.instancePrefix}/${instanceId}/question/${questionId}/answer`, { value });
     }
     getAnswer(instanceId, questionId) {
-        return this.http.get(`API/instance/${instanceId}/question/${questionId}/answer/`);
+        return this.http.get(`${this.instancePrefix}/${instanceId}/question/${questionId}/answer/`);
     }
     refreshSurvey(instanceId) {
         return this.http.get(`${this.instancePrefix}/${instanceId}/question`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(survey => {
@@ -2483,7 +2483,7 @@ let AuthService = class AuthService {
     constructor(http, tokenStorageService) {
         this.http = http;
         this.tokenStorageService = tokenStorageService;
-        this.prefix = 'API/auth';
+        this.prefix = 'api/auth';
     }
     login(userId, password) {
         return this.http.post(`${this.prefix}/login`, { userId, password }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])((res) => this.tokenStorageService.saveToken(res.token)));
