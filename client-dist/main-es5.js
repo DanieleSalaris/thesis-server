@@ -2031,13 +2031,17 @@
           component: _src_app_home_home_component__WEBPACK_IMPORTED_MODULE_0__["HomeComponent"]
         }, {
           path: 'instance',
-          component: _src_app_survey_instances_today_instance_today_instance_component__WEBPACK_IMPORTED_MODULE_5__["TodayInstanceComponent"]
+          component: _src_app_survey_instances_today_instance_today_instance_component__WEBPACK_IMPORTED_MODULE_5__["TodayInstanceComponent"],
+          // component: InstancesComponent,
+          canActivate: [_src_app_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
         }, {
           path: 'instance/:instanceId',
-          component: _src_app_survey_question_container_question_container_component__WEBPACK_IMPORTED_MODULE_4__["QuestionContainerComponent"]
+          component: _src_app_survey_question_container_question_container_component__WEBPACK_IMPORTED_MODULE_4__["QuestionContainerComponent"],
+          canActivate: [_src_app_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
         }, {
           path: 'instance/:instanceId/question/:questionId',
-          component: _src_app_survey_question_question_component__WEBPACK_IMPORTED_MODULE_1__["QuestionComponent"]
+          component: _src_app_survey_question_question_component__WEBPACK_IMPORTED_MODULE_1__["QuestionComponent"],
+          canActivate: [_src_app_auth_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
         }]
       }];
       /***/
