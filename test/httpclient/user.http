@@ -41,7 +41,7 @@ Authorization: Bearer {{auth_token}}
 }
 
 ### login first admin
-POST http://localhost:4242/api/auth/login
+POST https://s265553-thesis-server.herokuapp.com/api/auth/login
 Content-Type: application/json
 
 {
@@ -52,14 +52,14 @@ Content-Type: application/json
 > {% client.global.set("auth_token", response.body.token) %}
 
 ### create user
-POST http://localhost:4242/api/auth/user
+POST https://s265553-thesis-server.herokuapp.com/api/auth/user
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-  "userId": "002",
+  "userId": "user5",
   "password": "12345678",
-  "isAdmin": true
+  "isAdmin": false
 }
 
 ### login user
@@ -67,8 +67,6 @@ POST https://s265553-thesis-server.herokuapp.com/api/auth/login
 Content-Type: application/json
 
 {
-  "userId": "002",
+  "userId": "user5",
   "password": "12345678"
 }
-
-
