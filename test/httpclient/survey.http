@@ -51,6 +51,9 @@ Content-Type: application/json
 ### get aswers csv
 GET http://localhost:4242/api/survey/answer-csv
 
+### get average
+GET http://localhost:4242/api/survey/3/average
+
 
 
 

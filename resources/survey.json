@@ -127,7 +127,8 @@
             {"label": "Più no che si"},
             {"label": "Più si che no"},
             {"label": "Decisamente no"}
-          ]
+          ],
+          "aspect": "Thermal Comfort"
         }
       },
       {
@@ -143,7 +144,8 @@
             {"label": "Più no che si"},
             {"label": "Più si che no"},
             {"label": "Decisamente no"}
-          ]
+          ],
+          "aspect": "Indoor air quality"
         }
       },
       {
@@ -159,7 +161,8 @@
             {"label": "Più no che si"},
             {"label": "Più si che no"},
             {"label": "Decisamente no"}
-          ]
+          ],
+          "aspect": "Acoustic Comfort"
         }
       },
       {
@@ -175,23 +178,8 @@
             {"label": "Più no che si"},
             {"label": "Più si che no"},
             {"label": "Decisamente no"}
-          ]
-        }
-      },
-      {
-        "_id": "5",
-        "type": "choice",
-        "data": {
-          "label": "Sono soddisfatto delle condizioni di illuminazione naturale e artificiale (quantità di luce, assenza di disturbi visivi) nelle aule in cui si svolgono le lezioni?",
-          "minNumberOfChoices": 1,
-          "maxNumberOfChoices": 1,
-          "slider": true,
-          "options": [
-            {"label": "Decisamente no"},
-            {"label": "Più no che si"},
-            {"label": "Più si che no"},
-            {"label": "Decisamente no"}
-          ]
+          ],
+          "aspect": "Visual Comfort"
         }
       }
     ]

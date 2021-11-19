@@ -61,10 +61,13 @@ const surveyService = {
       .filter(el => el.type === 'choice')
       .map(val => ({
         _id: val._id,
-        count: val.data.options.length
+        count: val.data.options.length,
+        aspect: val.data.aspect
       }))
+
+    const questionIds = questions.map(q => q._id)
     const answers = await AnswerSchema.aggregate([
-      {$match: {surveyId, questionType: 'choice'}},
+      {$match: {surveyId, questionType: 'choice', questionId: {$in: questionIds}}},
       {$project: {
         _id: 0,
         questionId: 1,
@@ -77,10 +80,15 @@ const surveyService = {
       {$sort: {_id: 1}}
     ])
 
-    return answers.map(a => ({
-      questionId: a._id,
-      rate: a.average / (questions.find(q => q._id === a._id).count - 1)
-    }))
+    return answers
+      .map(a => {
+      const question = questions.find(q => q._id === a._id)
+      return {
+        questionId: a._id,
+        rate: a.average / (question.count - 1),
+        aspect: question.aspect
+      }
+    })
   }
 }
 
