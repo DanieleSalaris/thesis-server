@@ -77,8 +77,8 @@ router.post(
 
 router.get(
   '/:surveyId/average',
-  // authMiddleware.validateJwt,
-  // authMiddleware.roleAdmin,
+  authMiddleware.validateJwt,
+  authMiddleware.roleAdmin,
   async (req, res, next) => {
     const {surveyId} = req.params
     const average = await surveyService.getAverage(surveyId)
